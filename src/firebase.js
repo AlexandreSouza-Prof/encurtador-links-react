@@ -3,12 +3,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  projectId: "encurtador-links-alexandre",
-  appId: "1:413406127873:web:02ce58ffa1056a732d5d00",
-  storageBucket: "encurtador-links-alexandre.firebasestorage.app",
-  apiKey: "AIzaSyDkXWRGYADsReTHJTEN6DHLIJzzEtpa38g",
-  authDomain: "encurtador-links-alexandre.firebaseapp.com",
-  messagingSenderId: "413406127873"
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID
 };
 
 const app = initializeApp(firebaseConfig);
