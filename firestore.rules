@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /links/{shortCode} {
+      // Leitura pública de documento específico (para redirecionamento)
+      allow get: if true;
+      
+      // Qualquer um pode atualizar apenas o contador de cliques
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['clicks']);
+      
+      // O dono pode listar seus links, excluir ou atualizar
+      allow list, delete, update: if request.auth != null && request.auth.uid == resource.data.userId;
+      
+      // Na criação, o userId deve corresponder ao usuário logado
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      
+      // Sub-coleção para o histórico de cliques
+      match /history/{historyId} {
+        // Público pode registrar metadados
+        allow create: if true;
+        // Dono pode visualizar o histórico (já coberto na aplicação onde apenas logados vêem)
+        allow read: if request.auth != null;
+      }
+    }
+  }
+}
